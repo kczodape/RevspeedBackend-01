@@ -45,4 +45,9 @@ public class CustomersController {
         // Fetch customer details based on email
         return customerRepository.findByEmail(userEmail);
     }
+
+    @GetMapping("/countOfTotalCustomers")
+    public Long getCountOfTotalCustomers(){
+        return customerRepository.findAll().stream().count();
+    }
 }
