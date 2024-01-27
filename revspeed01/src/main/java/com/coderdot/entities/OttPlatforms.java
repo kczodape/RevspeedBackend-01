@@ -21,6 +21,10 @@ public class OttPlatforms {
     @OneToMany(mappedBy = "ottPlatforms")
     private List<DurationOttMapping> durationOttMappings;
 
+    public String getOttPlatformsName() {
+        return ottPlatformsName;
+    }
+
 //    @OneToMany(mappedBy = "ottPlatforms")
 //    private List<CustomerServiceLink> customerServiceLinks;
 }

@@ -32,10 +32,6 @@ public class Individual {
     private int speed;
     private double price;
 
-//    @ManyToOne
-//    @JoinColumn(name = "ottPlatformsId")
-//    private OttPlatforms ottPlatforms;
-
     @OneToMany(mappedBy = "individual")
     private List<CustomerServiceLink> customerServiceLinks;
 }
