@@ -3,6 +3,7 @@ package com.coderdot.controllers;
 import com.coderdot.dto.CustomersResponse;
 import com.coderdot.entities.Customer;
 import com.coderdot.repository.CustomerRepository;
+import com.coderdot.services.CustomerRoleUpdateServicer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,13 +16,18 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CustomersController {
 
     @Autowired
     private final CustomerRepository customerRepository;
 
-    public CustomersController(CustomerRepository customerRepository) {
+    private final CustomerRoleUpdateServicer customerRoleUpdateServicer;
+
+
+    public CustomersController(CustomerRepository customerRepository, CustomerRoleUpdateServicer customerRoleUpdateServicer) {
         this.customerRepository = customerRepository;
+        this.customerRoleUpdateServicer = customerRoleUpdateServicer;
     }
 
     @GetMapping("/hello")
@@ -32,6 +38,7 @@ public class CustomersController {
 //    Api for admin to retrive details of all users
     @GetMapping("/allcustomers")
     public List<Customer> getAllUsers(){
+
         return customerRepository.findAll();
     }
 
@@ -49,5 +56,14 @@ public class CustomersController {
     @GetMapping("/countOfTotalCustomers")
     public Long getCountOfTotalCustomers(){
         return customerRepository.findAll().stream().count();
+    }
+
+    @PatchMapping("/customers/{customerId}/update-role")
+    public ResponseEntity<Customer> updateCustomerRole(
+            @PathVariable Long customerId,
+            @RequestParam String newRole
+    ) {
+        Customer updatedCustomer = customerRoleUpdateServicer.updateCustomerRole(customerId, newRole);
+        return ResponseEntity.ok(updatedCustomer);
     }
 }

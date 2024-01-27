@@ -19,8 +19,8 @@ public class Duration {
     private String durationName;
     private int days;
 
-//    @OneToMany(mappedBy = "duration")
-//    private List<Individual> individuals;
+    @OneToMany(mappedBy = "duration", fetch = FetchType.LAZY)
+    private List<Individual> individuals;
 
 //    @OneToMany(mappedBy = "duration")
 //    private List<Business> businesses;

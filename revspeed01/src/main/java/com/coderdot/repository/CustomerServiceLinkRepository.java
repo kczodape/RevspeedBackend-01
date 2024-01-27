@@ -1,9 +1,17 @@
 package com.coderdot.repository;
 
+import com.coderdot.dto.ActiveCustomersDTO;
+import com.coderdot.dto.BroadbandReveneuDTO;
+import com.coderdot.dto.CustomerSubscriptionDTO;
+import com.coderdot.dto.DthReveneuDTO;
 import com.coderdot.entities.CustomerServiceLink;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface CustomerServiceLinkRepository extends JpaRepository<CustomerServiceLink, Long> {
@@ -27,4 +35,59 @@ public interface CustomerServiceLinkRepository extends JpaRepository<CustomerSer
             "   csl.customer_id " +
             ") AS customer_totals", nativeQuery = true)
     Double getGrandTotalPrice();
+
+    // Projection Interface
+    public interface MonthlySubscribers {
+        String getMonth();
+        Long getTotalSubscribers();
+    }
+
+    // Modified Repository Query
+    @Query(value = "SELECT DATE_FORMAT(subscription_start_date, '%M') AS month, COUNT(DISTINCT customer_id) AS totalSubscribers FROM customer_service_link WHERE customer_status = 1 GROUP BY DATE_FORMAT(subscription_start_date, '%M')", nativeQuery = true)
+    List<MonthlySubscribers> findTotalSubscribersByMonth();
+
+    // DTO Conversion Method (Optional, if needed)
+    default List<CustomerSubscriptionDTO> convertToDTOs(List<MonthlySubscribers> results) {
+        // Implement the conversion logic based on the structure of your projection result
+        // For example:
+        List<CustomerSubscriptionDTO> dtos = new ArrayList<>();
+        for (MonthlySubscribers result : results) {
+            CustomerSubscriptionDTO dto = new CustomerSubscriptionDTO();
+            dto.setMonth(result.getMonth());
+            dto.setTotalSubscribers(result.getTotalSubscribers());
+            // Set other properties accordingly
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    @Query("SELECT 'Individual' AS serviceType, COALESCE(SUM(i.price), 0) AS totalRevenue " +
+            "FROM CustomerServiceLink csl " +
+            "LEFT JOIN Individual i ON csl.individual.individualId = i.individualId AND csl.customerStatus = true " +
+            "UNION " +
+            "SELECT 'Business' AS serviceType, COALESCE(SUM(b.price), 0) AS totalRevenue " +
+            "FROM CustomerServiceLink csl " +
+            "LEFT JOIN Business b ON csl.business.businessId = b.businessId AND csl.customerStatus = true")
+    List<Object[]> getTotalRevenueByServiceType();
+
+
+    @Query(nativeQuery = true, value = "SELECT " +
+            "SUM(e.price) AS total_english_amount, " +
+            "SUM(h.price) AS total_hindi_amount, " +
+            "SUM(t.price) AS total_tamil_amount " +
+            "FROM customer_service_link csl " +
+            "LEFT JOIN english e ON csl.english_id = e.english_id " +
+            "LEFT JOIN hindi h ON csl.hindi_id = h.hindi_id " +
+            "LEFT JOIN tamil t ON csl.tamil_id = t.tamil_id")
+    List<Object[]> getTotalRevenueByDthServiceType();
+
+    @Query("SELECT 'Broadband' AS status, COUNT(DISTINCT csl.customer.id) AS count " +
+            "FROM CustomerServiceLink csl " +
+            "WHERE csl.customerStatus = true AND (csl.individual.id != 0 OR csl.business.id != 0)")
+    Object getBroadbandStatusCount();
+
+    @Query("SELECT 'DTH' AS status, COUNT(DISTINCT csl.customer.id) AS count " +
+            "FROM CustomerServiceLink csl " +
+            "WHERE csl.customerStatus = true AND (csl.english.id != 0 OR csl.hindi.id != 0 OR csl.tamil.id != 0)")
+    Object getDTHStatusCount();
 }
