@@ -5,6 +5,7 @@ import com.coderdot.entities.Customer;
 import com.coderdot.repository.CustomerRepository;
 import com.coderdot.services.CustomerRoleUpdateServicer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", methods = {RequestMethod.PATCH})
 public class CustomersController {
 
     @Autowired
@@ -58,12 +59,13 @@ public class CustomersController {
         return customerRepository.findAll().stream().count();
     }
 
-    @PatchMapping("/customers/{customerId}/update-role")
+    @PutMapping("/customers/{customerId}/update-role/{newRole}")
     public ResponseEntity<Customer> updateCustomerRole(
             @PathVariable Long customerId,
-            @RequestParam String newRole
+            @PathVariable String newRole
     ) {
         Customer updatedCustomer = customerRoleUpdateServicer.updateCustomerRole(customerId, newRole);
         return ResponseEntity.ok(updatedCustomer);
     }
+    
 }
