@@ -12,6 +12,7 @@ import java.nio.channels.Channel;
 @ToString
 public class ChannelDTO {
 
+    private Long channelId;
     private String channelName;
     private String channelCategory;
     private double price;
