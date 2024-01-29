@@ -35,7 +35,7 @@ public class WebSecurityConfiguration {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/**").authenticated()
-                .requestMatchers("/signup", "/login", "/email/send", "/login/updatepassword", "/broadband-plans").permitAll()
+                .requestMatchers("/signup", "/login", "/email/send", "/login/updatepassword", "/broadband-plans", "/broadband/**").permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

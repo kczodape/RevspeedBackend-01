@@ -67,5 +67,5 @@ public class CustomersController {
         Customer updatedCustomer = customerRoleUpdateServicer.updateCustomerRole(customerId, newRole);
         return ResponseEntity.ok(updatedCustomer);
     }
-    
+
 }
