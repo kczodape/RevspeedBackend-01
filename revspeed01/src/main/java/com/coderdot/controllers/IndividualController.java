@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/individual")
+@RequestMapping("/broadband/individual")
 public class IndividualController {
 
     private final IndividualService individualService;

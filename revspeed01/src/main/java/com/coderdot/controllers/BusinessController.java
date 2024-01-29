@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/business")
+@RequestMapping("/broadband/business")
 public class BusinessController {
 
     @Autowired
