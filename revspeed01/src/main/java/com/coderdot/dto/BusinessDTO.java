@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class BusinessDTO {
-    private String planName;
+    private Long businessId;
     private String durationName;
     private int days;
     private String planType;

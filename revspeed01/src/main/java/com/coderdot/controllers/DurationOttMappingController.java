@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/durationOttMappings")
+@RequestMapping("/ott/durationOttMappings")
 public class DurationOttMappingController {
 
     private final DurationOttMappingService durationOttMappingService;
