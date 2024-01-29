@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/t/channels")
+@RequestMapping("/broadband/channels")
 public class ChannelController {
 
 
