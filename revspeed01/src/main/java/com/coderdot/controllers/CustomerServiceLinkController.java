@@ -1,17 +1,11 @@
 package com.coderdot.controllers;
 
-import com.coderdot.dto.ActiveCustomersDTO;
-import com.coderdot.dto.BroadbandReveneuDTO;
-import com.coderdot.dto.CustomerSubscriptionDTO;
-import com.coderdot.dto.DthReveneuDTO;
-import com.coderdot.repository.CustomerServiceLinkRepository;
+import com.coderdot.dto.*;
 import com.coderdot.services.CustomerServiceLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,5 +47,79 @@ public class CustomerServiceLinkController {
     @GetMapping("/active-dth-customers")
     public Object getDTHStatusCount() {
         return customerServiceLinkService.getDTHStatusCount();
+    }
+
+
+    @PostMapping("/individual/create")
+    public ResponseEntity<String> createCustomerServiceLinkIndividual(@RequestBody CustomerServiceLinkIndividualDTO requestDTO) {
+        try {
+            customerServiceLinkService.saveCustomerServiceLinkIndividualWithDates(
+                    requestDTO.getCustomerId(),
+                    requestDTO.getIndividualId(),
+                    requestDTO.getDurationDays(),
+                    requestDTO.isCustomerStatus()
+            );
+            return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creating Customer Service Link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/business/create")
+    public ResponseEntity<String> saveCustomerServiceLinkBusinessWithDates(@RequestBody CustomerServiceLinkBusinessDTO requestDTO) {
+        try {
+            customerServiceLinkService.saveCustomerServiceLinkBusinessWithDates(
+                    requestDTO.getCustomerId(),
+                    requestDTO.getBusinessId(),
+                    requestDTO.getDurationDays(),
+                    requestDTO.isCustomerStatus()
+            );
+            return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creating Customer Service Link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/english/create")
+    public ResponseEntity<String> saveCustomerServiceLinkEnglishWithDates(@RequestBody CustomerServiceLinkEnglishDTO requestDTO) {
+        try {
+            customerServiceLinkService.saveCustomerServiceLinkEnglishWithDates(
+                    requestDTO.getCustomerId(),
+                    requestDTO.getEnglishId(),
+                    requestDTO.getDurationDays(),
+                    requestDTO.isCustomerStatus()
+            );
+            return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creating Customer Service Link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/hindi/create")
+    public ResponseEntity<String> saveCustomerServiceLinkHindiWithDates(@RequestBody CustomerServiceLinkHindiDTO requestDTO) {
+        try {
+            customerServiceLinkService.saveCustomerServiceLinkHindiWithDates(
+                    requestDTO.getCustomerId(),
+                    requestDTO.getHindiId(),
+                    requestDTO.getDurationDays(),
+                    requestDTO.isCustomerStatus()
+            );
+            return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creating Customer Service Link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/tamil/create")
+    public ResponseEntity<String> saveCustomerServiceLinkTamilWithDates(@RequestBody CustomerServiceLinkTamilDTO requestDTO) {
+        try {
+            customerServiceLinkService.saveCustomerServiceLinkTamilWithDates(
+                    requestDTO.getCustomerId(),
+                    requestDTO.getTamilId(),
+                    requestDTO.getDurationDays(),
+                    requestDTO.isCustomerStatus()
+            );
+            return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creating Customer Service Link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
