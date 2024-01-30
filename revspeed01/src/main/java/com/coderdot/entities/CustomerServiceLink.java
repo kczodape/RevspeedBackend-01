@@ -3,6 +3,7 @@ package com.coderdot.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +30,7 @@ public class CustomerServiceLink {
 //    @JoinColumn(name = "ottPlatformsId") // Correcting the JoinColumn name
 //    private OttPlatforms ottPlatforms;
 
+
     @ManyToOne
     @JoinColumn(name = "businessId")
     private Business business;
@@ -49,7 +51,7 @@ public class CustomerServiceLink {
     @JoinColumn(name = "individualId") // Add this line for the Individual relationship
     private Individual individual;
 
-    private Date subscriptionStartDate;
-    private Date subscriptionEndDate;
+    private LocalDate subscriptionStartDate;
+    private LocalDate subscriptionEndDate;
     private boolean customerStatus;
 }
