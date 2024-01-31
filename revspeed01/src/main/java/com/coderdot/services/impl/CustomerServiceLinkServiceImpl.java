@@ -36,6 +36,7 @@ public class CustomerServiceLinkServiceImpl implements CustomerServiceLinkServic
       this.durationRepository = durationRepository1;
   }
 
+
     @Override
     public Double getGrandTotalRevenue() {
         return customerServiceLinkRepository.getGrandTotalPrice();
