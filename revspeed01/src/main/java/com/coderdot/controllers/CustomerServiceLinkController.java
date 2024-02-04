@@ -122,4 +122,9 @@ public class CustomerServiceLinkController {
             return new ResponseEntity<>("Error creating Customer Service Link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/history/{customerId}")
+    public List<CustomerHistoryDTO> getServiceDetails(@PathVariable Long customerId) {
+        return customerServiceLinkService.getCustomerHistoryDetails(customerId);
+    }
 }

@@ -21,4 +21,6 @@ public interface CustomerServiceLinkService {
     void saveCustomerServiceLinkHindiWithDates(Long customerId, Long hindiId, int durationDays, boolean customerStatus);
     void saveCustomerServiceLinkTamilWithDates(Long customerId, Long tamilId, int durationDays, boolean customerStatus);
 
+    List<CustomerHistoryDTO> getCustomerHistoryDetails(Long customerId);
+
 }
