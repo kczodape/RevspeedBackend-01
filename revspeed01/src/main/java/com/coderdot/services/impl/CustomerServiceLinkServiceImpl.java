@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -196,5 +197,15 @@ public class CustomerServiceLinkServiceImpl implements CustomerServiceLinkServic
         customerServiceLinkRepository.save(customerServiceLink);
     }
 
-//    saveCustomerServiceLinkHindiWithDates
+    @Override
+    public List<CustomerHistoryDTO> getCustomerHistoryDetails(Long customerId) {
+        List<Object[]> result = customerServiceLinkRepository.getCustomerHistoryDetails(customerId);
+
+        return result.stream()
+                .map(row -> new CustomerHistoryDTO(
+                        (String) row[6],
+                        (Double) row[7]
+                ))
+                .collect(Collectors.toList());
+    }
 }
