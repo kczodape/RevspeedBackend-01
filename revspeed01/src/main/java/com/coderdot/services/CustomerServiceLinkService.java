@@ -23,4 +23,6 @@ public interface CustomerServiceLinkService {
 
     List<CustomerHistoryDTO> getCustomerHistoryDetails(Long customerId);
 
+    void updateCustomerStatusBySubscriptionEndDate(Long cid);
+
 }

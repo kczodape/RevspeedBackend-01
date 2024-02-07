@@ -208,4 +208,11 @@ public class CustomerServiceLinkServiceImpl implements CustomerServiceLinkServic
                 ))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void updateCustomerStatusBySubscriptionEndDate(Long cid) {
+
+        customerServiceLinkRepository.updateCustomerStatusBySubscriptionEndDate(cid);
+
+    }
 }

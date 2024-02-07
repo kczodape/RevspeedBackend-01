@@ -3,11 +3,13 @@ package com.coderdot.repository;
 import com.coderdot.dto.*;
 import com.coderdot.entities.CustomerServiceLink;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,4 +107,15 @@ public interface CustomerServiceLinkRepository extends JpaRepository<CustomerSer
             "LEFT JOIN tamil t ON csl.tamil_id = t.tamil_id " +
             "WHERE csl.customer_id = :customerId", nativeQuery = true)
     List<Object[]> getCustomerHistoryDetails(@Param("customerId") Long customerId);
+
+    @Query("SELECT csl.customer.id FROM CustomerServiceLink csl WHERE csl.subscriptionEndDate = :subscriptionEndDate")
+    List<String> findBySubscriptionEndDate(@Param("subscriptionEndDate") LocalDate subscriptionEndDate);
+
+    @Query("SELECT csl.customer.id FROM CustomerServiceLink csl WHERE csl.subscriptionEndDate = :subscriptionEndDate")
+    List<String> findBySubscriptionBeforeEndDate(@Param("subscriptionEndDate") LocalDate subscriptionEndDate);
+
+    @Modifying
+    @Query("UPDATE CustomerServiceLink c SET c.customerStatus = false WHERE  c.subscriptionEndDate= CURRENT_DATE AND c.customer.id = :customerId")
+    void updateCustomerStatusBySubscriptionEndDate(@Param( "customerId") Long customerId);
 }
+

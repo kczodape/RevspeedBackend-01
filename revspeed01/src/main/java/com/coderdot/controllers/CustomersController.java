@@ -68,4 +68,28 @@ public class CustomersController {
         return ResponseEntity.ok(updatedCustomer);
     }
 
+    @PutMapping("/mydetails")
+    public ResponseEntity<?> updateMyDetails(@RequestBody Customer updatedCustomerDetails) {
+        // Get the currently authenticated user's email
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        // Fetch existing customer details based on email
+        Optional<Customer> existingCustomerOptional = customerRepository.findByEmail(userEmail);
+
+        if (existingCustomerOptional.isPresent()) {
+            Customer existingCustomer = existingCustomerOptional.get();
+            // Update existing customer details with the provided details
+            existingCustomer.setName(updatedCustomerDetails.getName());
+            existingCustomer.setPhoneNumber(updatedCustomerDetails.getPhoneNumber());
+            existingCustomer.setAddress(updatedCustomerDetails.getAddress());
+
+            // Save the updated customer details
+            customerRepository.save(existingCustomer);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
