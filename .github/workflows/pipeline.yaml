@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: ${{secrets.GKE_PROJECT}}
-  GKE_CLUSTER: angular-gke-sample
+  GKE_CLUSTER: angular-gke-sample-back
   GKE_ZONE: us-central1
   DEPLOYMENT_NAME: revspeed-gke
   IMAGE: revspeed-gke-image
