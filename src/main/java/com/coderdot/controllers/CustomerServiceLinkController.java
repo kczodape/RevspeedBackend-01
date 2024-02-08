@@ -84,7 +84,7 @@ public class CustomerServiceLinkController {
             );
 
 
-//            BroadbandPlans broadbandPlans=broadbandPlansRepository.findById(individual.get)
+//            BroadbandPlans broadbandPlans=broadbandPlansRepository.findById(individual.get) chnaged
 
             String k="Hello you Subscribe to individual plan for"+" "+requestDTO.getDurationDays()+" "+"days. Thanks";
 
