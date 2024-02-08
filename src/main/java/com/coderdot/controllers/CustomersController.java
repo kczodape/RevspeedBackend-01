@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", methods = {RequestMethod.PATCH})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CustomersController {
 
     @Autowired
