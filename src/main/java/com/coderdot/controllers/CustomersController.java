@@ -92,4 +92,30 @@ public class CustomersController {
         }
     }
 
+    @PutMapping("/mydetails/delete")
+    public ResponseEntity<String> updateMyDetails() {
+        // Get the currently authenticated user's email
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        // Fetch customer details based on email
+        Optional<Customer> optionalCustomer = customerRepository.findByEmail(userEmail);
+
+        // Check if the customer exists
+        if (optionalCustomer.isPresent()) {
+            Customer existingCustomer = optionalCustomer.get();
+
+            // Set email and password fields to null
+            existingCustomer.setEmail(null);
+            existingCustomer.setPassword(null);
+
+            // Save the updated customer details
+            customerRepository.save(existingCustomer);
+            return ResponseEntity.ok("Email and password set to null successfully");
+        } else {
+            // Customer not found
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
