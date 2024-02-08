@@ -88,7 +88,7 @@ public class CustomerServiceLinkController {
 
             String k="Hello you Subscribe to individual plan for"+" "+requestDTO.getDurationDays()+" "+"days. Thanks";
 
-            emailSender.sendEmailforSignup(customer.getEmail(),"hi",k);
+            emailSender.sendEmailforSignup(customer.getEmail()," Your New Internet Subscription is Confirmed!",k);
 //            emailSender.sendSubscriptionReminderEmails();
             System.out.println("Email send success fully !");
 
@@ -109,7 +109,7 @@ public class CustomerServiceLinkController {
                     requestDTO.isCustomerStatus()
             );
             String k="Hello you Subscribe to business plan for"+" "+requestDTO.getDurationDays()+" "+" days. Thanks";
-            emailSender.sendEmailforSignup(customer.getEmail(),"hi",k);
+            emailSender.sendEmailforSignup(customer.getEmail()," Your New Internet Subscription is Confirmed!",k);
             System.out.println("Email send success fully !");
             return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -131,7 +131,7 @@ public class CustomerServiceLinkController {
 
             String k="Hello you Subscribe to english plan for"+" "+requestDTO.getDurationDays()+" "+" days. Thanks";
             System.out.println(customer.getEmail());
-            emailSender.sendEmailforSignup(customer.getEmail(),"hi",k);
+            emailSender.sendEmailforSignup(customer.getEmail()," Your New Internet Subscription is Confirmed!",k);
             return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error creating Customer Service Link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -149,8 +149,10 @@ public class CustomerServiceLinkController {
                     requestDTO.getDurationDays(),
                     requestDTO.isCustomerStatus()
             );
-            String k="Hello you Subscribe to hindi plan for"+" "+requestDTO.getDurationDays()+" "+" days. Thanks";
-            emailSender.sendEmailforSignup(customer.getEmail(),"hi",k);
+            String k="Hello you \n" +
+                    " You have Subscribe to hindi plan for"+" "+requestDTO.getDurationDays()+" "+" days. \n" +
+                    "Thanks";
+            emailSender.sendEmailforSignup(customer.getEmail()," Your New Internet Subscription is Confirmed!",k);
             System.out.println("Email send success fully !");
             return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -170,7 +172,7 @@ public class CustomerServiceLinkController {
                     requestDTO.isCustomerStatus()
             );
             String k="Hello you Subscribe to tamil plan for"+" "+requestDTO.getDurationDays()+" "+"Thanks";
-            emailSender.sendEmailforSignup(customer.getEmail(),"hi",k);
+            emailSender.sendEmailforSignup(customer.getEmail()," Your New Internet Subscription is Confirmed!",k);
             System.out.println("Email send success fully !");
 
             return new ResponseEntity<>("Customer Service Link created successfully", HttpStatus.CREATED);
