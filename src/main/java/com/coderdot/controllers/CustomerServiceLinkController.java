@@ -79,12 +79,10 @@ public class CustomerServiceLinkController {
                     requestDTO.getIndividualId(),
                     requestDTO.getDurationDays(),
                     requestDTO.isCustomerStatus()
-
-
             );
 
 
-//            BroadbandPlans broadbandPlans=broadbandPlansRepository.findById(individual.get)
+//            BroadbandPlans broadbandPlans=broadbandPlansRepository.findById(individual.get);
 
             String k="Hello you Subscribe to individual plan for"+" "+requestDTO.getDurationDays()+" "+"days. Thanks";
 
